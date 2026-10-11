@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0d1016">
+  <meta name="description" content="方块之间，打开即玩的俄罗斯方块。支持键盘、触屏、落点预览和本机最高分。">
+  <title>方块之间 · 俄罗斯方块</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1016'/%3E%3Cpath fill='%23c9f46b' d='M12 4h8v8h-8zM4 14h8v8H4zM14 14h8v8h-8zM24 14h4v8h-4z'/%3E%3C/svg%3E">
+  <style>:root{color-scheme:dark;--bg:#0d1016;--panel:#141820;--line:#2b303a;--muted:#9ba4b5;--white:#f0f2f6;--lime:#c9f46b;font-family:Inter,"Segoe UI","Microsoft YaHei",sans-serif;font-synthesis:none}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font-size:16px}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer}button:disabled{opacity:.38;cursor:default}button:focus-visible,a:focus-visible,canvas:focus-visible{outline:2px solid var(--lime);outline-offset:5px}button{transition:background .15s,transform .15s}button:active{transform:translateY(1px)}.shell{max-width:1180px;margin:0 auto;padding:0 48px}.topbar{height:100px;display:flex;align-items:center;border-bottom:1px solid var(--line);gap:24px}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--white);font-size:19px;font-weight:650;letter-spacing:2px}.brand-mark{color:var(--lime);font-size:43px;line-height:1;transform:rotate(90deg)}.brand small{display:block;font-size:10px;letter-spacing:3.4px;font-weight:500;color:var(--muted);margin-top:4px}.edition{margin-left:auto;color:var(--muted);font-size:13px;letter-spacing:1px}.edition span{margin:0 12px;color:#59606c}.icon-button{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:7px;padding:9px 13px;font-size:13px;margin-left:18px}.icon-button span{margin-left:6px;color:var(--white)}.icon-button:hover{background:var(--panel)}main{padding-top:34px}.intro{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:34px}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--lime);margin:0 0 13px}h1{font-size:36px;line-height:1.4;letter-spacing:1.5px;font-weight:600;margin:0}h1 br{display:none}h1>span{color:var(--lime)}.intro-note{color:var(--muted);font-size:14px;margin:10px 0 0}.session{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);padding-bottom:2px;white-space:nowrap;font-variant-numeric:tabular-nums}.session-line{width:17px;height:2px;background:var(--lime)}.session-divider{color:#48505e;margin:0 4px}.game-layout{display:grid;grid-template-columns:1fr minmax(230px,310px) 1fr;gap:38px;max-width:930px;margin:0 auto}.left-panel,.right-panel{padding-top:22px}.section-label{font-size:14px;margin:0;letter-spacing:1px;color:#d5dbe4;display:flex;align-items:center;justify-content:space-between}.section-label>span{font-size:10px;letter-spacing:1.5px;color:#798292}.score-number{font-size:43px;letter-spacing:0;font-weight:550;margin:16px 0 12px;font-variant-numeric:tabular-nums}.best-line{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}.best-line span:last-child{color:var(--lime);font-variant-numeric:tabular-nums}.score-section{padding-bottom:28px;border-bottom:1px solid var(--line)}.metrics{display:grid;grid-template-columns:1fr 1fr;margin-top:26px}.metrics>div{display:flex;flex-direction:column;gap:11px}.metrics>div+div{border-left:1px solid var(--line);padding-left:25px}.metrics span{font-size:13px;color:var(--muted)}.metrics strong{font-size:31px;font-weight:500;font-variant-numeric:tabular-nums}.progress-section{margin-top:29px}.progress-section>div:first-child{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}.progress-section b{font-weight:400;color:var(--white)}.progress-track{height:3px;background:#292f3a;margin-top:12px}.progress-track>div{height:100%;background:var(--lime);width:0;transition:width .2s}.desktop-tip{margin-top:82px;color:var(--muted);font-size:14px;line-height:1.9}.tip-symbol{font-size:29px;color:var(--lime);line-height:1}.desktop-tip p{margin-top:13px}.board-top,.board-bottom{display:flex;justify-content:space-between;font-size:10px;letter-spacing:1px;color:var(--muted);height:25px;align-items:flex-start}.board-top i{display:inline-block;background:var(--lime);height:5px;width:5px;margin-right:5px;vertical-align:middle}.board-top>span:last-child{font-size:9px;letter-spacing:1.6px}.board-bottom{font-size:10px;letter-spacing:0;padding-top:10px;height:30px}.board-wrap{position:relative;aspect-ratio:1/2;border:1px solid #3d4655;background:#10141c;box-shadow:0 14px 50px #0003;isolation:isolate}.board-wrap::before,.board-wrap::after{content:"";position:absolute;width:12px;height:12px;border-color:var(--lime);pointer-events:none;z-index:3}.board-wrap::before{top:-1px;left:-1px;border-top:2px solid var(--lime);border-left:2px solid var(--lime)}.board-wrap::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--lime);border-right:2px solid var(--lime)}#board{display:block;width:100%;height:100%;touch-action:none}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#10141cdf;text-align:center;padding:20px;z-index:2;backdrop-filter:blur(2px)}.overlay[hidden]{display:none}.overlay-mark{font-size:44px;color:var(--lime);margin-bottom:18px}.overlay>p{font-size:13px;color:var(--muted);margin:7px 0}.overlay>h2{font-size:25px;font-weight:600;letter-spacing:1px;margin:5px 0 9px}.overlay>#overlay-kicker{font-size:11px;letter-spacing:3px;color:var(--lime)}.primary{border:0;border-radius:5px;background:var(--lime);color:#17210d;font-size:14px;font-weight:650;padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:28px}.primary:hover{background:#daff87}.overlay .primary{margin-top:24px;width:100%;max-width:228px}.primary kbd{border-color:#839e45;color:#425820;background:transparent;font-size:10px}.overlay .overlay-foot{font-size:10px;margin-top:15px}.next-section{border-bottom:1px solid var(--line);padding-bottom:13px}#next{display:block;width:160px;height:200px;max-width:100%;margin:10px auto 0}.game-actions{margin-top:25px}.secondary{display:flex;align-items:center;justify-content:space-between;background:#1a202a;border:1px solid #333c4b;color:var(--white);border-radius:5px;padding:11px 14px;font-size:13px;width:100%}.secondary:hover:not(:disabled){background:#252e3b}.text-button{display:block;border:0;background:transparent;color:var(--muted);font-size:13px;padding:14px 0;width:100%}.text-button:hover{color:var(--white)}.controls{border-top:1px solid var(--line);margin-top:15px;padding-top:24px}.controls>.section-label{margin-bottom:18px;font-size:13px}.controls>div{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:12px}kbd{display:inline-flex;align-items:center;justify-content:center;min-width:23px;min-height:23px;padding:2px 5px;background:#191e27;border:1px solid #343b48;border-radius:4px;font:11px "Segoe UI",sans-serif;color:#c7cfdd}.space-key{min-width:52px}.touch-controls{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}.touch-controls button{border:1px solid var(--line);background:var(--panel);border-radius:5px;color:var(--white);min-height:38px;font-size:21px;touch-action:none;user-select:none}.touch-controls button:hover{background:#252e3b}.touch-controls .drop-button{grid-column:1/-1;font-size:12px;min-height:32px;color:var(--lime);letter-spacing:2px}.toast{position:absolute;left:0;right:0;top:37%;text-align:center;font-size:26px;font-weight:800;color:var(--lime);text-shadow:0 2px 15px #000;pointer-events:none;opacity:0;transform:translateY(7px);transition:opacity .2s,transform .2s;z-index:1}.toast.show{opacity:1;transform:translateY(0)}footer{display:flex;justify-content:space-between;margin-top:38px;padding:22px 0 28px;border-top:1px solid var(--line);color:#7e8898;font-size:11px;letter-spacing:1px}.footer-block{color:var(--lime);margin-left:10px}dialog{max-width:calc(100% - 32px);width:390px;background:var(--panel);color:var(--white);border:1px solid #495363;border-radius:10px;padding:26px}dialog::backdrop{background:#000a;backdrop-filter:blur(4px)}dialog h2{font-size:21px;margin:0 0 12px}dialog p{font-size:14px;color:var(--muted);line-height:1.8}dialog>div{display:flex;gap:10px;margin-top:25px}dialog button{flex:1;white-space:nowrap;justify-content:center!important}
+@media(min-width:1000px) and (max-height:950px){.topbar{height:78px}main{padding-top:24px}.intro{margin-bottom:24px}h1{font-size:29px}.game-layout{grid-template-columns:1fr minmax(220px,260px) 1fr;max-width:850px;gap:40px}footer{margin-top:25px}.touch-controls{display:none}.desktop-tip{margin-top:65px}}
+@media(max-width:800px){.shell{padding:0 25px}.game-layout{gap:23px;grid-template-columns:1fr minmax(220px,280px) 1fr}.score-number{font-size:30px}.section-label>span{display:none}.metrics>div+div{padding-left:16px}h1{font-size:27px}.intro{margin-bottom:25px}.eyebrow{font-size:10px}.controls>div{font-size:11px;gap:8px}.edition{display:none}.icon-button{margin-left:auto}.session{display:none}.desktop-tip{font-size:12px}.primary{gap:18px}}
+@media(max-width:620px){.shell{padding:0 20px;max-width:440px}.topbar{height:76px}.brand{font-size:16px}.brand small{font-size:9px}.brand-mark{font-size:36px}main{padding-top:22px}.intro{margin-bottom:23px}h1{font-size:26px;letter-spacing:1px}.eyebrow{font-size:9px;margin-bottom:8px}.intro-note{font-size:12px;margin-top:7px}.game-layout{display:grid;grid-template-columns:minmax(0,1fr) 90px;gap:14px}.left-panel{grid-column:1/-1;display:flex;align-items:center;gap:22px;padding-top:0;margin-bottom:4px}.score-section{border:0;padding:0;flex:1}.section-label{font-size:12px}.score-number{font-size:28px;margin:5px 0}.best-line{font-size:10px;justify-content:flex-start;gap:12px}.metrics{margin:0;gap:16px}.metrics>div{gap:6px}.metrics>div+div{padding-left:16px}.metrics strong{font-size:25px}.metrics span{font-size:11px}.progress-section,.desktop-tip{display:none}.board-column{grid-column:1}.right-panel{grid-column:2;padding-top:25px;min-width:0}.board-top{font-size:9px;height:22px}.board-top>span:last-child{font-size:8px;letter-spacing:.5px}.board-bottom{font-size:8px}.overlay{padding:14px}.overlay>h2{font-size:21px}.overlay>p{font-size:11px}.overlay .primary{padding:12px 10px;gap:12px;font-size:13px}.overlay .overlay-foot{font-size:9px}.overlay-mark{font-size:35px}.next-section{padding-bottom:10px}#next{width:90px;height:160px;margin-top:7px}.game-actions{margin-top:17px}.secondary{padding:10px 5px;font-size:11px;justify-content:center;gap:5px}.secondary kbd{display:none}.text-button{font-size:11px;padding:14px 0}.controls{margin-top:7px;padding-top:17px}.controls>.section-label{font-size:11px}.controls>div{font-size:10px;flex-wrap:wrap;margin-top:13px;gap:4px}.controls>div>span:last-child{width:100%}kbd{font-size:10px;min-width:20px;min-height:20px}.touch-controls button{min-height:42px}.touch-controls .drop-button{min-height:36px}.touch-controls{gap:6px}footer{margin-top:25px;padding:20px 0;font-size:10px}footer>span:last-child{display:none}.toast{font-size:22px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media(max-width:620px){.topbar{height:60px}main{padding-top:10px}.intro{margin-bottom:12px}h1{font-size:22px}.eyebrow,.intro-note{display:none}.left-panel{gap:18px}.score-number{font-size:25px;margin:4px 0}.metrics strong{font-size:23px}#next{height:auto}.controls{display:none}.board-bottom{height:24px}.touch-controls{margin-top:4px}}
+
+.download-link{color:var(--lime);font-size:13px;text-decoration:none;white-space:nowrap}.download-link:hover{text-decoration:underline}@media(max-width:620px){.topbar{gap:12px}.brand{letter-spacing:1px;font-size:14px}.brand small{letter-spacing:2px}.brand-mark{font-size:30px}.icon-button{margin-left:0;padding:8px 10px;font-size:12px}.download-link{margin-left:auto;font-size:12px}}
+</style>
+  
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar"><a class="brand" href="./" aria-label="方块之间首页"><span class="brand-mark" aria-hidden="true">▟</span><span>方块之间<small>BLOCKFLOW</small></span></a><span class="edition">经典模式 <span>/</span> 01</span><button id="sound" class="icon-button" type="button" aria-label="开启音效" aria-pressed="false">音效 <span id="sound-state">关</span></button></header>
+    <main>
+      <section class="intro"><div><p class="eyebrow">THE CLASSIC, ONE MORE ROUND.</p><h1>让每一块，<br>都恰到好处<span>。</span></h1><p class="intro-note">移动、旋转、消行。进入你的节奏。</p></div><div class="session"><span class="session-line"></span><span id="status-label">准备就绪</span><span class="session-divider">/</span><span id="timer">00:00</span></div></section>
+      <section class="game-layout" aria-label="俄罗斯方块游戏">
+        <aside class="left-panel">
+          <div class="score-section"><p class="section-label">本局得分 <span>SCORE</span></p><div id="score" class="score-number">000000</div><div class="best-line"><span>本机最高</span><span id="best">0</span></div></div>
+          <div class="metrics"><div><span>等级</span><strong id="level">01</strong></div><div><span>已消行</span><strong id="lines">00</strong></div></div>
+          <div class="progress-section"><div><span>下一级</span><span><b id="progress-lines">0</b> / 10 行</span></div><div class="progress-track"><div id="progress-fill"></div></div></div>
+          <div class="desktop-tip"><span class="tip-symbol">✳</span><p>留一点空间，<br>给下一种可能。</p></div>
+        </aside>
+        <div class="board-column">
+          <div class="board-top"><span><i></i> 10 × 20</span><span id="board-label">READY TO PLAY</span></div>
+          <div class="board-wrap" id="board-wrap"><canvas id="board" width="600" height="1200" tabindex="0" aria-label="俄罗斯方块棋盘，使用方向键移动和旋转，空格键落下，P 键暂停"></canvas>
+            <div id="overlay" class="overlay"><div class="overlay-mark" aria-hidden="true">▦</div><p id="overlay-kicker">找到你的节奏</p><h2 id="overlay-title">准备好了吗？</h2><p id="overlay-copy">填满一行，即可消除。</p><button id="primary" class="primary" type="button">开始游戏 <kbd>Enter</kbd></button><p id="overlay-foot" class="overlay-foot">也可以使用下方的触控按钮</p></div>
+            <div id="toast" class="toast" aria-live="polite"></div>
+          </div>
+          <div class="board-bottom"><span>落点轮廓已开启</span><span>7-BAG 随机</span></div>
+          <div class="touch-controls" aria-label="触控操作"><button data-action="left" aria-label="向左移动">←</button><button data-action="rotate" aria-label="顺时针旋转">↻</button><button data-action="right" aria-label="向右移动">→</button><button data-action="down" aria-label="向下移动">↓</button><button data-action="drop" class="drop-button" aria-label="直接落下">直接落下</button></div>
+        </div>
+        <aside class="right-panel"><div class="next-section"><p class="section-label">接下来 <span>NEXT</span></p><canvas id="next" width="320" height="400" aria-label="接下来的三个方块"></canvas></div><div class="game-actions"><button id="pause" class="secondary" type="button" disabled><span id="pause-text">暂停游戏</span><kbd>P</kbd></button><button id="restart" class="text-button" type="button">↺ 重新开始</button></div><div class="controls"><p class="section-label">操作指南</p><div><span><kbd>←</kbd> <kbd>→</kbd></span><span>左右移动</span></div><div><span><kbd>↑</kbd></span><span>顺时针旋转</span></div><div><span><kbd>Z</kbd></span><span>逆时针旋转</span></div><div><span><kbd>↓</kbd></span><span>加速下落</span></div><div><span><kbd class="space-key">Space</kbd></span><span>直接落下</span></div><div><span><kbd>P</kbd> / <kbd>Esc</kbd></span><span>暂停 / 继续</span></div></div></aside>
+      </section>
+    </main><footer><span>少一点分心，多一点专注。</span><span>MADE FOR YOUR NEXT BREAK <span class="footer-block">▪</span></span></footer>
+  </div>
+  <dialog id="restart-dialog"><h2>开始新的一局？</h2><p>本局进度会清空，本机最高分会保留。</p><div><button id="cancel-restart" class="secondary">继续本局</button><button id="confirm-restart" class="primary">重新开始</button></div></dialog>
+<script>(function (root) {
+  'use strict';
+  const SHAPES = {
+    I: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]],
+    O: [[0,1,1,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]],
+    T: [[0,1,0],[1,1,1],[0,0,0]],
+    S: [[0,1,1],[1,1,0],[0,0,0]],
+    Z: [[1,1,0],[0,1,1],[0,0,0]],
+    J: [[1,0,0],[1,1,1],[0,0,0]],
+    L: [[0,0,1],[1,1,1],[0,0,0]]
+  };
+  // Clockwise/counterclockwise SRS kick tests, y positive upwards.
+  const KICKS = {
+    '0>1': [[0,0],[-1,0],[-1,1],[0,-2],[-1,-2]],
+    '1>0': [[0,0],[1,0],[1,-1],[0,2],[1,2]],
+    '1>2': [[0,0],[1,0],[1,-1],[0,2],[1,2]],
+    '2>1': [[0,0],[-1,0],[-1,1],[0,-2],[-1,-2]],
+    '2>3': [[0,0],[1,0],[1,1],[0,-2],[1,-2]],
+    '3>2': [[0,0],[-1,0],[-1,-1],[0,2],[-1,2]],
+    '3>0': [[0,0],[-1,0],[-1,-1],[0,2],[-1,2]],
+    '0>3': [[0,0],[1,0],[1,1],[0,-2],[1,-2]]
+  };
+  const IKICKS = {
+    '0>1': [[0,0],[-2,0],[1,0],[-2,-1],[1,2]],
+    '1>0': [[0,0],[2,0],[-1,0],[2,1],[-1,-2]],
+    '1>2': [[0,0],[-1,0],[2,0],[-1,2],[2,-1]],
+    '2>1': [[0,0],[1,0],[-2,0],[1,-2],[-2,1]],
+    '2>3': [[0,0],[2,0],[-1,0],[2,1],[-1,-2]],
+    '3>2': [[0,0],[-2,0],[1,0],[-2,-1],[1,2]],
+    '3>0': [[0,0],[1,0],[-2,0],[1,-2],[-2,1]],
+    '0>3': [[0,0],[-1,0],[2,0],[-1,2],[2,-1]]
+  };
+  function matrix(type, rotation=0) {
+    let m=SHAPES[type];
+    if(type==='O') return m;
+    for(let r=0;r<rotation;r++) m=m[0].map((_,x)=>m.map(row=>row[x]).reverse());
+    return m;
+  }
+  class Game {
+    constructor(random=Math.random) { this.random=random; this.reset(); }
+    reset() {
+      this.board=Array.from({length:20},()=>Array(10).fill(null));
+      this.queue=[]; this.current=null; this.score=0; this.lines=0;
+      this.level=1; this.status='ready'; this.gravity=0; this.lockTime=0;
+      this.lockResets=0; this.lastClear=0; this.pieces=0; this.elapsed=0;
+    }
+    start() { this.reset();this.status='playing';this.spawn(); }
+    get interval() { return Math.max(70,800*Math.pow(0.8,this.level-1)); }
+    fillQueue() {
+      while(this.queue.length<7) {
+        const bag=Object.keys(SHAPES);
+        for(let i=bag.length-1;i>0;i--) {
+          const j=Math.floor(this.random()*(i+1));[bag[i],bag[j]]=[bag[j],bag[i]];
+        }
+        this.queue.push(...bag);
+      }
+    }
+    spawn() {
+      this.fillQueue();this.current={type:this.queue.shift(),rotation:0,x:3,y:0};
+      this.gravity=0;this.lockTime=0;this.lockResets=0;
+      if(!this.valid(this.current)) this.status='over';
+    }
+    cells(piece=this.current) {
+      if(!piece) return [];
+      return matrix(piece.type,piece.rotation).flatMap((row,y)=>row.flatMap((v,x)=>v?[{x:x+piece.x,y:y+piece.y}]:[]));
+    }
+    valid(piece) { return this.cells(piece).every(({x,y})=>x>=0&&x<10&&y<20&&y>=-4&&(y<0||!this.board[y][x])); }
+    grounded() { return !this.valid({...this.current,y:this.current.y+1}); }
+    moved(wasGrounded) {
+      if(wasGrounded && this.lockResets<15) {this.lockTime=0;this.lockResets++;}
+    }
+    move(dx) {
+      if(this.status!=='playing') return false;
+      const p={...this.current,x:this.current.x+dx};
+      if(!this.valid(p)) return false;
+      const grounded=this.grounded();this.current=p;this.moved(grounded);return true;
+    }
+    rotate(dir=1) {
+      if(this.status!=='playing'||this.current.type==='O') return false;
+      const from=this.current.rotation,to=(from+dir+4)%4;
+      const kicks=(this.current.type==='I'?IKICKS:KICKS)[`${from}>${to}`];
+      for(const [dx,dy] of kicks) {
+        const p={...this.current,rotation:to,x:this.current.x+dx,y:this.current.y-dy};
+        if(this.valid(p)) {const grounded=this.grounded();this.current=p;this.moved(grounded);return true;}
+      }
+      return false;
+    }
+    softDrop() {
+      if(this.status!=='playing') return false;
+      const p={...this.current,y:this.current.y+1};
+      if(!this.valid(p)) return false;
+      this.current=p;this.score++;this.gravity=0;this.lockTime=0;return true;
+    }
+    ghostY() {
+      if(!this.current) return 0;
+      let p={...this.current};while(this.valid({...p,y:p.y+1}))p.y++;return p.y;
+    }
+    hardDrop() {
+      if(this.status!=='playing')return;
+      const y=this.ghostY();this.score+=(y-this.current.y)*2;this.current.y=y;this.lock();
+    }
+    lock() {
+      if(this.status!=='playing')return;
+      const cells=this.cells();
+      if(cells.some(c=>c.y<0)) {this.status='over';return;}
+      cells.forEach(({x,y})=>this.board[y][x]=this.current.type);
+      const remaining=this.board.filter(row=>!row.every(Boolean));
+      this.lastClear=20-remaining.length;
+      this.score+=[0,100,300,500,800][this.lastClear]*this.level;
+      this.lines+=this.lastClear;this.level=1+Math.floor(this.lines/10);
+      while(remaining.length<20)remaining.unshift(Array(10).fill(null));
+      this.board=remaining;this.pieces++;this.spawn();
+    }
+    pause() {
+      if(this.status==='playing') this.status='paused';
+      else if(this.status==='paused') this.status='playing';
+    }
+    tick(ms) {
+      if(this.status!=='playing') return;
+      ms=Math.min(ms,100);this.elapsed+=ms;
+      if(this.grounded()) {
+        this.lockTime+=ms;if(this.lockTime>=500)this.lock();
+      } else {
+        this.lockTime=0;this.gravity+=ms;
+        while(this.gravity>=this.interval) {
+          this.gravity-=this.interval;
+          if(this.valid({...this.current,y:this.current.y+1}))this.current.y++;
+          else break;
+        }
+      }
+    }
+  }
+  const api={Game,SHAPES,matrix};
+  if(typeof module!=='undefined'&&module.exports)module.exports=api;
+  else root.Blockflow=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+</script><script>(() => {
+  'use strict';
+  const {Game,matrix}=Blockflow;
+  const $=id=>document.getElementById(id);
+  const game=new Game();
+  const canvas=$('board'),ctx=canvas.getContext('2d');
+  const next=$('next'),nctx=next.getContext('2d');
+  const colors={I:'#65d9e8',O:'#efd065',T:'#b899f0',S:'#c9f46b',Z:'#ee8295',J:'#7da6ed',L:'#eca575'};
+  let best=0,sound=false,audio,lastTime=0,toastUntil=0,lastPieces=0,renderedStatus='',resumeAfterDialog=false;
+  const held=new Map();
+  try {best=Math.max(0,Number(localStorage.getItem('blockflow-best'))||0);} catch {}
+  function rememberBest() {
+    if(game.score<=best)return;
+    best=game.score;
+    try{localStorage.setItem('blockflow-best',String(best));}catch{}
+  }
+  function tone(frequency=400,duration=.05) {
+    if(!sound)return;
+    try {
+      audio??=new (window.AudioContext||window.webkitAudioContext)();
+      if(audio.state==='suspended')void audio.resume();
+      const osc=audio.createOscillator(),gain=audio.createGain();
+      osc.type='sine';osc.frequency.value=frequency;
+      gain.gain.setValueAtTime(.07,audio.currentTime);
+      gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);
+      osc.connect(gain);gain.connect(audio.destination);osc.start();osc.stop(audio.currentTime+duration);
+    } catch {}
+  }
+  function block(context,x,y,size,color,ghost=false) {
+    const pad=1.6;
+    if(ghost) {
+      context.fillStyle=color+'0b';context.fillRect(x+pad,y+pad,size-pad*2,size-pad*2);
+      context.strokeStyle=color+'80';context.lineWidth=1;
+      context.strokeRect(x+pad+.5,y+pad+.5,size-pad*2-1,size-pad*2-1);return;
+    }
+    context.fillStyle=color;context.fillRect(x+pad,y+pad,size-pad*2,size-pad*2);
+    context.fillStyle='#ffffff28';context.fillRect(x+pad,y+pad,size-pad*2,2);
+    context.fillStyle='#00000018';context.fillRect(x+pad,y+size-pad-3,size-pad*2,3);
+    context.fillStyle='#ffffff10';context.fillRect(x+pad+4,y+pad+4,size-pad*2-8,size-pad*2-8);
+  }
+  function draw() {
+    ctx.setTransform(2,0,0,2,0,0);ctx.fillStyle='#10141c';ctx.fillRect(0,0,300,600);
+    ctx.strokeStyle='#202632';ctx.lineWidth=.5;
+    for(let x=0;x<=10;x++){ctx.beginPath();ctx.moveTo(x*30,0);ctx.lineTo(x*30,600);ctx.stroke();}
+    for(let y=0;y<=20;y++){ctx.beginPath();ctx.moveTo(0,y*30);ctx.lineTo(300,y*30);ctx.stroke();}
+    game.board.forEach((row,y)=>row.forEach((v,x)=>{if(v)block(ctx,x*30,y*30,30,colors[v]);}));
+    if(game.current) {
+      if(game.status==='playing') game.cells({...game.current,y:game.ghostY()}).forEach(({x,y})=>{if(y>=0)block(ctx,x*30,y*30,30,colors[game.current.type],true);});
+      game.cells().forEach(({x,y})=>{if(y>=0)block(ctx,x*30,y*30,30,colors[game.current.type]);});
+    }
+    if(game.status==='ready') {
+      const demo=[['J',0,18],['S',3,18],['O',6,18],['T',7,16]];
+      ctx.globalAlpha=.23;
+      demo.forEach(([type,ox,oy])=>matrix(type).forEach((row,y)=>row.forEach((v,x)=>{if(v)block(ctx,(x+ox)*30,(y+oy)*30,30,colors[type]);})));
+      ctx.globalAlpha=1;
+    }
+  }
+  let nextKey='';
+  function drawNext() {
+    const types=game.status==='ready'?['T','I','L']:game.queue.slice(0,3);
+    const key=types.join('');if(key===nextKey)return;nextKey=key;
+    nctx.setTransform(2,0,0,2,0,0);nctx.clearRect(0,0,160,200);
+    types.forEach((type,index)=>{
+      const cells=[];matrix(type).forEach((row,y)=>row.forEach((v,x)=>{if(v)cells.push({x,y});}));
+      const minX=Math.min(...cells.map(c=>c.x)),maxX=Math.max(...cells.map(c=>c.x));
+      const minY=Math.min(...cells.map(c=>c.y)),maxY=Math.max(...cells.map(c=>c.y));
+      const size=index===0?23:19,ox=(160-(maxX-minX+1)*size)/2,oy=index*66+(62-(maxY-minY+1)*size)/2;
+      nctx.globalAlpha=index===0?1:.6;
+      cells.forEach(({x,y})=>block(nctx,ox+(x-minX)*size,oy+(y-minY)*size,size,colors[type]));
+    });nctx.globalAlpha=1;
+  }
+  function focusBoard(){canvas.focus({preventScroll:true});}
+  function update() {
+    rememberBest();
+    $('score').textContent=String(game.score).padStart(6,'0');$('best').textContent=best.toLocaleString();
+    $('level').textContent=String(game.level).padStart(2,'0');$('lines').textContent=String(game.lines).padStart(2,'0');
+    $('progress-lines').textContent=game.lines%10;$('progress-fill').style.width=(game.lines%10*10)+'%';
+    const seconds=Math.floor(game.elapsed/1000);$('timer').textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');
+    $('pause').disabled=!['playing','paused'].includes(game.status);
+    $('pause-text').textContent=game.status==='paused'?'继续游戏':'暂停游戏';
+    $('status-label').textContent={ready:'准备就绪',playing:'游戏进行中',paused:'已暂停',over:'本局结束'}[game.status];
+    $('board-label').textContent={ready:'READY TO PLAY',playing:'FIND YOUR FLOW',paused:'TAKE A BREATH',over:'ONE MORE ROUND?'}[game.status];
+    if(renderedStatus!==game.status) {
+      renderedStatus=game.status;$('overlay').hidden=game.status==='playing';
+      if(game.status!=='playing')held.clear();
+      if(game.status==='paused') {
+        $('overlay-kicker').textContent='休息一下';$('overlay-title').textContent='节奏，由你掌握';
+        $('overlay-copy').textContent='准备好后，继续这一局。';$('primary').innerHTML='继续游戏 <kbd>P</kbd>';
+        $('overlay-foot').textContent='切换页面时会自动暂停';
+      }else if(game.status==='over') {
+        $('overlay-kicker').textContent='下次，一定更好';$('overlay-title').textContent='本局结束';
+        $('overlay-copy').textContent=`获得 ${game.score.toLocaleString()} 分 · 消除 ${game.lines} 行`;
+        $('primary').innerHTML='再来一局 <kbd>Enter</kbd>';$('overlay-foot').textContent='本机最高 '+best.toLocaleString()+' 分';
+        tone(150,.22);
+      }
+    }
+    if(lastPieces!==game.pieces) {
+      lastPieces=game.pieces;
+      if(game.lastClear) {
+        $('toast').textContent=['','单行消除','双行消除','三行消除','四行全消！'][game.lastClear];
+        toastUntil=performance.now()+950;tone(580+game.lastClear*100,.15);
+      }else tone(180,.045);
+    }
+    $('toast').classList.toggle('show',performance.now()<toastUntil&&game.status==='playing');
+    draw();drawNext();
+  }
+  function start() {held.clear();game.start();lastPieces=0;toastUntil=0;lastTime=performance.now();tone(620,.09);update();focusBoard();}
+  function pause() {held.clear();game.pause();update();focusBoard();}
+  function primary() {game.status==='paused'?pause():start();}
+  function action(name) {
+    if(game.status!=='playing')return;
+    switch(name) {
+      case 'left':game.move(-1);break;case 'right':game.move(1);break;
+      case 'rotate':if(game.rotate())tone(420);break;case 'reverse':if(game.rotate(-1))tone(420);break;
+      case 'down':game.softDrop();break;case 'drop':game.hardDrop();break;
+    }
+    update();
+  }
+  function hold(name,key) {
+    action(name);
+    if(game.status==='playing'&&['left','right','down'].includes(name))held.set(key,{name,next:performance.now()+(name==='down'?70:170)});
+  }
+  $('primary').addEventListener('click',primary);$('pause').addEventListener('click',pause);
+  $('sound').addEventListener('click',()=>{
+    sound=!sound;$('sound').setAttribute('aria-pressed',String(sound));$('sound').setAttribute('aria-label',sound?'关闭音效':'开启音效');
+    $('sound-state').textContent=sound?'开':'关';tone(540,.1);focusBoard();
+  });
+  const dialog=$('restart-dialog');
+  $('restart').addEventListener('click',()=>{
+    if(game.status==='ready'||game.status==='over'){start();return;}
+    resumeAfterDialog=game.status==='playing';if(resumeAfterDialog)game.pause();held.clear();update();dialog.showModal();
+  });
+  function cancelRestart(){dialog.close();if(resumeAfterDialog&&game.status==='paused')game.pause();update();focusBoard();}
+  $('cancel-restart').addEventListener('click',cancelRestart);
+  dialog.addEventListener('cancel',event=>{event.preventDefault();cancelRestart();});
+  $('confirm-restart').addEventListener('click',()=>{dialog.close();start();});
+  const keys={ArrowLeft:'left',ArrowRight:'right',ArrowDown:'down',ArrowUp:'rotate',KeyX:'rotate',KeyZ:'reverse',Space:'drop'};
+  document.addEventListener('keydown',event=>{
+    if(dialog.open||event.ctrlKey||event.metaKey||event.altKey)return;
+    if(event.code==='Tab')return;
+    if(keys[event.code]) {
+      // Keep native activation for focused controls while the start/pause overlay is visible.
+      if(event.code==='Space'&&event.target.tagName==='BUTTON'&&game.status!=='playing')return;
+      event.preventDefault();if(!event.repeat)hold(keys[event.code],event.code);
+    } else if(event.code==='KeyP'||event.code==='Escape') {
+      event.preventDefault();if(!event.repeat)pause();
+    } else if(event.code==='Enter'&&event.target.tagName!=='BUTTON'&&game.status!=='playing') {
+      event.preventDefault();if(!event.repeat)primary();
+    }
+  });
+  document.addEventListener('keyup',event=>held.delete(event.code));
+  document.querySelectorAll('[data-action]').forEach(button=>{
+    button.addEventListener('pointerdown',event=>{
+      event.preventDefault();button.setPointerCapture(event.pointerId);hold(button.dataset.action,'pointer'+event.pointerId);
+    });
+    for(const name of ['pointerup','pointercancel','lostpointercapture'])button.addEventListener(name,event=>held.delete('pointer'+event.pointerId));
+    button.addEventListener('click',event=>{if(event.detail===0)action(button.dataset.action);});
+  });
+  function autoPause(){held.clear();if(game.status==='playing'){game.pause();update();}}
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)autoPause();});window.addEventListener('blur',autoPause);
+  function loop(now) {
+    const delta=lastTime?now-lastTime:0;lastTime=now;
+    if(game.status==='playing') {
+      for(const state of held.values())if(now>=state.next){action(state.name);state.next=now+(state.name==='down'?35:50);}
+      game.tick(delta);update();
+    }
+    requestAnimationFrame(loop);
+  }
+  update();requestAnimationFrame(loop);
+  if(document.modelContext?.registerTool) {
+    const lifecycle=new AbortController();
+    window.addEventListener('pagehide',event=>{if(!event.persisted)lifecycle.abort();});
+    const state=()=>({status:game.status,score:game.score,lines:game.lines,level:game.level,board:game.board,current:game.current,next:game.queue.slice(0,3)});
+    const tools=[
+      {name:'read_game_state',title:'读取俄罗斯方块状态',description:'Read the current board, falling piece, score, and game status.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true,untrustedContentHint:false},execute:()=>state()},
+      {name:'control_game',title:'操作俄罗斯方块',description:'Start an idle or finished game, pause or resume, or perform one in-game move. Does not restart an active game.',inputSchema:{type:'object',properties:{action:{type:'string',enum:['start','pause','resume','left','right','down','rotate','reverse','drop']}},required:['action'],additionalProperties:false},annotations:{readOnlyHint:false,untrustedContentHint:false},execute:input=>{
+        if(!input||typeof input!=='object'||Object.keys(input).length!==1||!['start','pause','resume','left','right','down','rotate','reverse','drop'].includes(input.action))throw new Error('Invalid game action');
+        if(dialog.open)throw new Error('Close the restart dialog first');
+        const name=input.action;
+        if(name==='start'){if(!['ready','over'].includes(game.status))throw new Error('Game already started');start();}
+        else if(name==='pause'||name==='resume'){if(game.status!==(name==='pause'?'playing':'paused'))throw new Error('Action unavailable in current state');pause();}
+        else {if(game.status!=='playing')throw new Error('Game is not running');action(name);}
+        return state();
+      }}
+    ];
+    for(const tool of tools)try{Promise.resolve(document.modelContext.registerTool(tool,{signal:lifecycle.signal})).catch(()=>{});}catch{}
+  }
+})();
+</script></body></html>

@@ -1,0 +1,15 @@
+node_modules/
+artifacts/
+.env
+.env.*
+!.env.example
+.openai/
+.codex/
+.agents/
+*.log
+*.key
+*.pem
+credentials*
+publish*.cjs
+.DS_Store
+Thumbs.db

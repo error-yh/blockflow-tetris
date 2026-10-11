@@ -1,0 +1,10 @@
+{
+  "name": "blockflow-tetris",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A browser-based block puzzle game with an offline single-file edition.",
+  "scripts": {
+    "test": "node --test tests/engine.test.cjs",
+    "build:offline": "node scripts/build-offline.cjs"
+  }
+}

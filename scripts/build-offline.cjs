@@ -1,0 +1,11 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const root=path.resolve(__dirname,'..');
+let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+html=html.replace('<link rel="stylesheet" href="style.css">',()=>'<style>'+fs.readFileSync(path.join(root,'style.css'),'utf8')+'</style>');
+html=html.replace('<script src="engine.js" defer></script><script src="app.js" defer></script>','');
+html=html.replace(/<a id="download-offline"[^>]*>[^<]*<\/a>/,'');
+html=html.replace('</body>',()=>'<script>'+fs.readFileSync(path.join(root,'engine.js'),'utf8')+'</script><script>'+fs.readFileSync(path.join(root,'app.js'),'utf8')+'</script></body>');
+const directory=path.join(root,'downloads');fs.mkdirSync(directory,{recursive:true});
+fs.writeFileSync(path.join(directory,'blockflow.html'),html);
+console.log('Created downloads/blockflow.html');

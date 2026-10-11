@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0d1016">
+  <meta name="description" content="方块之间，打开即玩的俄罗斯方块。支持键盘、触屏、落点预览和本机最高分。">
+  <title>方块之间 · 俄罗斯方块</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1016'/%3E%3Cpath fill='%23c9f46b' d='M12 4h8v8h-8zM4 14h8v8H4zM14 14h8v8h-8zM24 14h4v8h-4z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="engine.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar"><a class="brand" href="./" aria-label="方块之间首页"><span class="brand-mark" aria-hidden="true">▟</span><span>方块之间<small>BLOCKFLOW</small></span></a><span class="edition">经典模式 <span>/</span> 01</span><a id="download-offline" class="download-link" href="downloads/blockflow.html" download="俄罗斯方块.html">离线下载</a><button id="sound" class="icon-button" type="button" aria-label="开启音效" aria-pressed="false">音效 <span id="sound-state">关</span></button></header>
+    <main>
+      <section class="intro"><div><p class="eyebrow">THE CLASSIC, ONE MORE ROUND.</p><h1>让每一块，<br>都恰到好处<span>。</span></h1><p class="intro-note">移动、旋转、消行。进入你的节奏。</p></div><div class="session"><span class="session-line"></span><span id="status-label">准备就绪</span><span class="session-divider">/</span><span id="timer">00:00</span></div></section>
+      <section class="game-layout" aria-label="俄罗斯方块游戏">
+        <aside class="left-panel">
+          <div class="score-section"><p class="section-label">本局得分 <span>SCORE</span></p><div id="score" class="score-number">000000</div><div class="best-line"><span>本机最高</span><span id="best">0</span></div></div>
+          <div class="metrics"><div><span>等级</span><strong id="level">01</strong></div><div><span>已消行</span><strong id="lines">00</strong></div></div>
+          <div class="progress-section"><div><span>下一级</span><span><b id="progress-lines">0</b> / 10 行</span></div><div class="progress-track"><div id="progress-fill"></div></div></div>
+          <div class="desktop-tip"><span class="tip-symbol">✳</span><p>留一点空间，<br>给下一种可能。</p></div>
+        </aside>
+        <div class="board-column">
+          <div class="board-top"><span><i></i> 10 × 20</span><span id="board-label">READY TO PLAY</span></div>
+          <div class="board-wrap" id="board-wrap"><canvas id="board" width="600" height="1200" tabindex="0" aria-label="俄罗斯方块棋盘，使用方向键移动和旋转，空格键落下，P 键暂停"></canvas>
+            <div id="overlay" class="overlay"><div class="overlay-mark" aria-hidden="true">▦</div><p id="overlay-kicker">找到你的节奏</p><h2 id="overlay-title">准备好了吗？</h2><p id="overlay-copy">填满一行，即可消除。</p><button id="primary" class="primary" type="button">开始游戏 <kbd>Enter</kbd></button><p id="overlay-foot" class="overlay-foot">也可以使用下方的触控按钮</p></div>
+            <div id="toast" class="toast" aria-live="polite"></div>
+          </div>
+          <div class="board-bottom"><span>落点轮廓已开启</span><span>7-BAG 随机</span></div>
+          <div class="touch-controls" aria-label="触控操作"><button data-action="left" aria-label="向左移动">←</button><button data-action="rotate" aria-label="顺时针旋转">↻</button><button data-action="right" aria-label="向右移动">→</button><button data-action="down" aria-label="向下移动">↓</button><button data-action="drop" class="drop-button" aria-label="直接落下">直接落下</button></div>
+        </div>
+        <aside class="right-panel"><div class="next-section"><p class="section-label">接下来 <span>NEXT</span></p><canvas id="next" width="320" height="400" aria-label="接下来的三个方块"></canvas></div><div class="game-actions"><button id="pause" class="secondary" type="button" disabled><span id="pause-text">暂停游戏</span><kbd>P</kbd></button><button id="restart" class="text-button" type="button">↺ 重新开始</button></div><div class="controls"><p class="section-label">操作指南</p><div><span><kbd>←</kbd> <kbd>→</kbd></span><span>左右移动</span></div><div><span><kbd>↑</kbd></span><span>顺时针旋转</span></div><div><span><kbd>Z</kbd></span><span>逆时针旋转</span></div><div><span><kbd>↓</kbd></span><span>加速下落</span></div><div><span><kbd class="space-key">Space</kbd></span><span>直接落下</span></div><div><span><kbd>P</kbd> / <kbd>Esc</kbd></span><span>暂停 / 继续</span></div></div></aside>
+      </section>
+    </main><footer><span>少一点分心，多一点专注。</span><span>MADE FOR YOUR NEXT BREAK <span class="footer-block">▪</span></span></footer>
+  </div>
+  <dialog id="restart-dialog"><h2>开始新的一局？</h2><p>本局进度会清空，本机最高分会保留。</p><div><button id="cancel-restart" class="secondary">继续本局</button><button id="confirm-restart" class="primary">重新开始</button></div></dialog>
+</body></html>
